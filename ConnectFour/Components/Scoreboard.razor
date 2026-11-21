@@ -1,0 +1,69 @@
+<section class="statement">
+    <h4>Game Statement</h4>
+
+    <div class="summary">
+        <div class="card-item card-p1">
+            <span class="label">Player 1 wins</span>
+            <span class="value">@Ledger.Player1Wins</span>
+        </div>
+        <div class="card-item card-p2">
+            <span class="label">Player 2 wins</span>
+            <span class="value">@Ledger.Player2Wins</span>
+        </div>
+        <div class="card-item">
+            <span class="label">Ties</span>
+            <span class="value">@Ledger.Ties</span>
+        </div>
+        <div class="card-item">
+            <span class="label">Games played</span>
+            <span class="value">@Ledger.TotalGames</span>
+        </div>
+    </div>
+
+    <p class="streak">@StreakText</p>
+
+    @if (Ledger.TotalGames == 0)
+    {
+        <p class="empty">No games recorded yet. Finish a game to see it here.</p>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date &amp; time</th>
+                    <th>Result</th>
+                    <th>Moves</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Ledger.Records)
+                {
+                    <tr>
+                        <td>@record.Number</td>
+                        <td>@record.FinishedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>@record.ResultText</td>
+                        <td>@record.Moves</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public GameLedger Ledger { get; set; } = default!;
+
+    private string StreakText
+    {
+        get
+        {
+            var (player, count) = Ledger.CurrentStreak();
+            return player == 0
+                ? "No active winning streak."
+                : $"Current streak: Player {player} - {count} win{(count == 1 ? "" : "s")} in a row";
+        }
+    }
+}

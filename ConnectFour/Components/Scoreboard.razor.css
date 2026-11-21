@@ -1,0 +1,73 @@
+.statement {
+    margin-top: 1.5em;
+    max-width: 30em;
+}
+
+.statement h4 {
+    margin-bottom: 0.5em;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5em;
+}
+
+.card-item {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.5em;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.card-p1 {
+    border-left: 6px solid var(--player1);
+}
+
+.card-p2 {
+    border-left: 6px solid var(--player2);
+}
+
+.label {
+    display: block;
+    font-size: 0.8em;
+    color: #555;
+}
+
+.value {
+    display: block;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.streak {
+    margin: 0.75em 0;
+    font-weight: 600;
+}
+
+.empty {
+    color: #666;
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 0.35em 0.5em;
+    text-align: left;
+}
+
+th {
+    background-color: #343a40;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

@@ -1,5 +1,6 @@
 @using System.Drawing
 @inject GameState State
+@inject GameLedger Ledger
 
 <HeadContent>
    <style>
@@ -47,6 +48,8 @@
    }
 </div>
 
+<Scoreboard Ledger="Ledger" />
+
 @code {
    private string[] pieces = new string[42];
    private string winnerMessage = string.Empty;
@@ -57,6 +60,10 @@
 
    private void PlayPiece(byte col)
    {
+      // Remember if the game had already ended before this click,
+      // so a finished game is recorded only once in the ledger.
+      var gameWasOver = winnerMessage != string.Empty;
+
       errorMessage = string.Empty;
       try
       {
@@ -70,13 +77,21 @@
          errorMessage = ex.Message;
       }
 
-      winnerMessage = State.CheckForWin() switch
+      var result = State.CheckForWin();
+
+      winnerMessage = result switch
       {
          GameState.WinState.Player1_Wins => "Player 1 Wins!",
          GameState.WinState.Player2_Wins => "Player 2 Wins!",
          GameState.WinState.Tie => "It's a tie!",
          _ => ""
       };
+
+      // Record the game in the statement only when it has just ended
+      if (!gameWasOver && result != GameState.WinState.No_Winner)
+      {
+         Ledger.AddRecord(result, State.CurrentTurn);
+      }
    }
 
    void ResetGame()
