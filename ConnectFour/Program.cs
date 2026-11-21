@@ -8,6 +8,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddSingleton<GameState>();
+builder.Services.AddSingleton<GameLedger>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
